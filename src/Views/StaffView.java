@@ -18,7 +18,7 @@ public class StaffView {
 
         do {
 
-            System.out.println("\n\n***** Bem-vind@, não demores muito, há trabalho para fazer *****");
+            System.out.println("\n\n***** Bem-vind@ *****");
             System.out.println("1. Consultar Quartos Disponíveis");
             System.out.println("2.Consultar Quartos Reservados");
             System.out.println("3. Consultar Reservas Atuais");
