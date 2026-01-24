@@ -1,18 +1,24 @@
 package Models;
 
-public class User {
-    private String userType ;
+import Enums.Role;
+
+/**
+ * Representa um utilizador do sistema.
+ */
+public class Login {
+
+    private Role role;
     private String username;
     private String password;
 
-    public User(String userType, String username, String password) {
-        this.userType = userType;
+    public Login(String username, String password, Role role) {
+        this.role = role;
         this.username = username;
         this.password = password;
     }
 
-    public String getUserType() {
-        return userType;
+    public Role getRole() {
+        return role;
     }
 
     public String getUsername() {
@@ -20,6 +26,7 @@ public class User {
     }
 
     public String getPassword() {
+
         return password;
     }
 }

@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.AdminController;
+import Models.Tipologia;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -46,6 +47,8 @@ public class AdminView {
                     break;
 
                 case 4: // Consultar Tipologia de Quarto Mais Reservada
+                    Tipologia t = adminController.tipologiaMaisReservada();
+                    System.out.println("Tipologia de Quarto Mais Reservada: " + t.getDescricao());
                     break;
 
                 case 5: //Consultar Experiência Mais Procurada (Adultos) – Número de bilhetes vendidos
@@ -57,7 +60,7 @@ public class AdminView {
                 case 7: //Consultar Experiência Mais Lucrativa – Valor total arrecadado
                     break;
 
-                case 8: //Consultar Experiência Menos Lucrativa – Valor total arrecadad
+                case 8: //Consultar Experiência Menos Lucrativa – Valor total arrecadado
                     break;
 
                 case 9: //Consultar Quarto com Melhor Preço/Semana
@@ -76,16 +79,5 @@ public class AdminView {
             }
 
         } while (opcao != 0);
-    }
-
-    public void printTotalSales() {
-        System.out.println("\n*** Total Vendas ***");
-        System.out.println(this.adminController.totalSalesValue() + " €");
-
-    }
-
-    public void printAverageSales() {
-        System.out.println("\n*** Média Vendas ***");
-        System.out.println(this.adminController.averageSales() + " €");
     }
 }

@@ -1,27 +1,30 @@
 package Controllers;
 
-import Models.User;
-import Repositories.UsersRepository;
+import Enums.Role;
+import Models.Login;
+import Repositories.LoginRepository;
 
 import java.io.FileNotFoundException;
 
 public class LoginController {
 
-    private UsersRepository usersRepository;
+    private LoginRepository loginRepository;
 
     public LoginController() throws FileNotFoundException {
-        this.usersRepository = new UsersRepository();
+        this.loginRepository = new LoginRepository();
     }
 
-    public String validateLogin(String usernameInput, String passwordInput){
+    public Role validateLogin(String usernameInput, String passwordInput) {
 
-        for(User userAtual: this.usersRepository.getUsersArrayList()){
-            if(userAtual.getUsername().equals(usernameInput) && userAtual.getPassword().equals(passwordInput)){
-                return userAtual.getUserType();
+        for (Login loginAtual : loginRepository.getLogins()) {
+
+            if (loginAtual.getUsername().equals(usernameInput)
+                    && loginAtual.getPassword().equals(passwordInput)) {
+
+                return loginAtual.getRole();
             }
         }
 
-        return "ERROR";
-
+        return Role.INVALID;
     }
 }

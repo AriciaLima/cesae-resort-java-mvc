@@ -1,68 +1,45 @@
 package Tools;
 
-import Models.Sale;
-import Models.User;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Leitor genérico de ficheiros CSV.
+ */
 public class CsvFileReader {
 
-    public static ArrayList<User> readUsersCsvFile(String filePath) throws FileNotFoundException {
+    /**
+     * Lê um ficheiro CSV e devolve as linhas (sem cabeçalho).
+     *
+     * @param filePath caminho do ficheiro CSV
+     * @param delimiter separador (ex: "," ou ";")
+     * @return lista de linhas já separadas em colunas
+     * @throws FileNotFoundException se o ficheiro não existir
+     */
+    public static ArrayList<String[]> read(
+            String filePath,
+            String delimiter) throws FileNotFoundException {
 
-        ArrayList<User> usersArray = new ArrayList<User>();
+        ArrayList<String[]> data = new ArrayList<>();
 
-        File usersFile = new File(filePath);
-        Scanner fileScanner = new Scanner(usersFile);
+        Scanner scanner = new Scanner(new File(filePath));
 
-        // Avançar o cabeçalho
-        fileScanner.nextLine();
-
-        while (fileScanner.hasNextLine()) {
-
-            String line = fileScanner.nextLine();
-            String[] separatedLine = line.split(";");
-
-            String newUserType = separatedLine[0];
-            String newUsername = separatedLine[1];
-            String newUserPassword = separatedLine[2];
-
-            User newUser = new User(newUserType,newUsername,newUserPassword);
-            usersArray.add(newUser);
-
+        // ignorar cabeçalho
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
         }
 
-        return usersArray;
-    }
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
 
-    public static ArrayList<Sale> readSalesCsvFile(String filePath) throws FileNotFoundException {
-
-        ArrayList<Sale> salesArray = new ArrayList<Sale>();
-
-        File salesFile = new File(filePath);
-        Scanner fileScanner = new Scanner(salesFile);
-
-        // Avançar o cabeçalho
-        fileScanner.nextLine();
-
-        while (fileScanner.hasNextLine()) {
-
-            String line = fileScanner.nextLine();
-            String[] separatedLine = line.split(",");
-
-            String newProductCategory = separatedLine[0];
-            String newProductName = separatedLine[1];
-            double newProductQuantity = Double.parseDouble(separatedLine[2]);
-            double newProductPrice = Double.parseDouble(separatedLine[3]);
-
-            Sale newSale = new Sale(newProductCategory,newProductName,newProductQuantity,newProductPrice);
-            salesArray.add(newSale);
-
+            if (!line.isEmpty()) {
+                data.add(line.split(delimiter));
+            }
         }
 
-        return salesArray;
+        scanner.close();
+        return data;
     }
-
 }

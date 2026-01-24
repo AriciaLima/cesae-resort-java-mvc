@@ -1,6 +1,7 @@
 package Views;
 
 import Controllers.LoginController;
+import Enums.Role;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -8,17 +9,17 @@ import java.util.Scanner;
 public class LoginView {
 
     private LoginController loginController;
+    private Scanner input;
 
     public LoginView() throws FileNotFoundException {
         this.loginController = new LoginController();
+        this.input = new Scanner(System.in);
     }
 
     public void menu() throws FileNotFoundException {
-        Scanner input = new Scanner(System.in);
         int opcao;
 
         do {
-
             System.out.println("\n\n***** CESAE Resort – Hotel Temático da Programação © *****");
             System.out.println("1. Cliente");
             System.out.println("2. Rececionista");
@@ -28,63 +29,72 @@ public class LoginView {
 
             System.out.print("Opção: ");
             opcao = input.nextInt();
+            input.nextLine(); // limpar buffer
 
             switch (opcao) {
-                case 1: // Cliente
-                    ClientView cv = new ClientView();
-                    cv.menu();
+                case 1:
+                    new ClientView().menu();
                     break;
 
-                case 2: // Rececionista
-                    menuLogin();
+                case 2:
+                    menuLogin(Role.GESTAO);
                     break;
 
-                case 3: //Guia de Experiencia
+                case 3:
+                    menuLogin(Role.GUIA);
                     break;
 
-                case 4: // Administrador
+                case 4:
+                    menuLogin(Role.ADMIN);
                     break;
 
-                case 0: // Sair
+                case 0:
                     System.out.println("A encerrar ⍈");
                     break;
 
                 default:
-                    System.out.println("❌ Opção Inválida: " + opcao + " ❌");
-                    break;
+                    System.out.println("❌ Opção Inválida ❌");
             }
+
         } while (opcao != 0);
     }
 
-    public void menuLogin() throws FileNotFoundException {
+    public void menuLogin(Role expectedRole) throws FileNotFoundException {
 
-        Scanner input = new Scanner(System.in);
-        String username;
-        String password;
+        while (true) {
+            System.out.print("Username (0 para voltar): ");
+            String username = input.nextLine();
 
-        System.out.println("\n\n***** INTERNO *****");
-        System.out.print("Username: ");
-        username = input.next();
-        System.out.print("Password: ");
-        password = input.next();
+            if (username.equals("0")) return;
 
-        String accessType = this.loginController.validateLogin(username, password);
+            System.out.print("Password: ");
+            String password = input.nextLine();
 
-        switch (accessType) {
-            case "ADMIN":
-                AdminView av = new AdminView();
-                av.menu();
+            Role role = loginController.validateLogin(username, password);
+
+            if (role == expectedRole) {
+                abrirMenu(role);
+                return;
+            } else {
+                System.out.println("❌ Acesso não autorizado ❌");
+            }
+        }
+    }
+
+    private void abrirMenu(Role role) throws FileNotFoundException {
+
+        switch (role) {
+            case ADMIN:
+                new AdminView().menu();
                 break;
 
-            case "FUNC":
-                StaffView sv = new StaffView();
-                sv.menu();
+            case GESTAO:
+                new StaffView().menu();
                 break;
 
-            default:
-                System.out.println("❌ Credenciais Inválidas ❌");
+            case GUIA:
+                new GuideView().menu();
                 break;
-
         }
     }
 }
