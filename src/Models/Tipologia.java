@@ -2,9 +2,9 @@ package Models;
 
 public class Tipologia {
 
-    private int id;
-    private String descricao;
-    private double precoPorSemana;
+    private int id;                 // ID da tipologia
+    private String descricao;       // Nome/descrição
+    private double precoPorSemana;  // Preço por semana
 
     public Tipologia(int id, String descricao, double precoPorSemana) {
         this.id = id;

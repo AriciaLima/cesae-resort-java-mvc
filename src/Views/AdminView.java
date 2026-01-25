@@ -12,6 +12,7 @@ public class AdminView {
     private AdminController adminController;
 
     public AdminView() throws FileNotFoundException {
+        // Cria o controlador
         this.adminController = new AdminController();
     }
 
@@ -41,13 +42,16 @@ public class AdminView {
                 case 1: // Consultar Total de Reservas: Número total de reservas (passadas e futuras)
                     break;
 
-                case 2: // Consultar Total de Receitas: Soma de preco_por_semana (quartos) + preços de bilhetes (experiências)
+                case 2: // Consultar Total de Receitas: Soma de preco_por_semana (quartos) + preços de
+                        // bilhetes (experiências)
                     break;
 
-                case 3: // Consultar Reservas/Receitas Mensais: Pergunta ano e mês, e apresenta as receitas desse mês
+                case 3: // Consultar Reservas/Receitas Mensais: Pergunta ano e mês, e apresenta as
+                        // receitas desse mês
                     break;
 
                 case 4: // Consultar Tipologia de Quarto Mais Reservada
+                    // Mostra tabela com tipologias mais reservadas
                     ArrayList<String[]> listaTipologias = adminController.tipologiaMaisReservada();
 
                     System.out.println("\n===== Tipologia de Quarto Mais Reservada =====");
@@ -63,23 +67,22 @@ public class AdminView {
                     System.out.println("+------------+----------------------+----------+--------------+");
                     break;
 
-
-                case 5: //Consultar Experiência Mais Procurada (Adultos) – Número de bilhetes vendidos
+                case 5: // Consultar Experiência Mais Procurada (Adultos) – Número de bilhetes vendidos
                     break;
 
                 case 6: // Consultar Experiência Mais Procurada (Crianças) – Número de bilhetes vendidos
                     break;
 
-                case 7: //Consultar Experiência Mais Lucrativa – Valor total arrecadado
+                case 7: // Consultar Experiência Mais Lucrativa – Valor total arrecadado
                     break;
 
-                case 8: //Consultar Experiência Menos Lucrativa – Valor total arrecadado
+                case 8: // Consultar Experiência Menos Lucrativa – Valor total arrecadado
                     break;
 
-                case 9: //Consultar Quarto com Melhor Preço/Semana
+                case 9: // Consultar Quarto com Melhor Preço/Semana
                     break;
 
-                case 10: //Adicionar Novo Login
+                case 10: // Adicionar Novo Login
                     break;
 
                 case 0: // Voltar

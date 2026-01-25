@@ -2,8 +2,8 @@ package Models;
 
 public class Quarto {
 
-    private int numero;
-    private int tipologiaId;
+    private int numero;       // Número do quarto
+    private int tipologiaId;  // ID da tipologia
 
     public Quarto(int numero, int tipologiaId) {
         this.numero = numero;

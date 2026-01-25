@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         try {
+            // Inicia o fluxo de login
             LoginView loginView = new LoginView();
             loginView.menu();
         } catch (FileNotFoundException e) {

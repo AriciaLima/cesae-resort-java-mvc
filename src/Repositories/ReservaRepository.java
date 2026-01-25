@@ -11,6 +11,7 @@ public class ReservaRepository {
     private ArrayList<ReservaQuarto> reservas;
 
     public ReservaRepository() throws FileNotFoundException {
+        // Carrega reservas do CSV
         this.reservas = carregarReservas();
     }
 
@@ -18,7 +19,7 @@ public class ReservaRepository {
         ArrayList<String[]> linhas = CsvFileReader.read("files/reservas_quartos.csv", ",");
         ArrayList<ReservaQuarto> lista = new ArrayList<>();
 
-        // CsvFileReader já removeu o header, então iteramos desde o início
+        // Itera pelas linhas (header já removido)
         for (String[] linha : linhas) {
 
             // Ignorar linhas vazias ou incompletas

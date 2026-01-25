@@ -11,6 +11,7 @@ public class QuartoRepository {
     private ArrayList<Quarto> quartos;
 
     public QuartoRepository() throws FileNotFoundException {
+        // Carrega quartos do CSV
         this.quartos = carregarQuartos();
     }
 

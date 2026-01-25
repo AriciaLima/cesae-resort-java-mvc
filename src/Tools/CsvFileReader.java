@@ -27,7 +27,7 @@ public class CsvFileReader {
         File file = new File(filePath);
         try (Scanner scanner = new Scanner(file)) {
 
-            // ignorar cabeçalho
+            // Remove o cabeçalho
             if (scanner.hasNextLine()) {
                 scanner.nextLine();
             }
@@ -39,7 +39,7 @@ public class CsvFileReader {
 
                 String[] columns = line.split(delimiter);
 
-                // limpar espaços
+                // Limpa espaços
                 for (int i = 0; i < columns.length; i++) {
                     columns[i] = columns[i].trim();
                 }

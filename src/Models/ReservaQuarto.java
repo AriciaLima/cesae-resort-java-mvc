@@ -2,12 +2,12 @@ package Models;
 
 public class ReservaQuarto {
 
-    private String id;        // R001
-    private int numQuarto;    // 101
-    private String idCliente; // C001
-    private int ano;
-    private int mes;
-    private int semana;
+    private String id;        // ID da reserva
+    private int numQuarto;    // Número do quarto
+    private String idCliente; // ID do cliente
+    private int ano;          // Ano da reserva
+    private int mes;          // Mês da reserva
+    private int semana;       // Semana do mês
 
     public ReservaQuarto(String id, int numQuarto, String idCliente, int ano, int mes, int semana) {
         this.id = id;

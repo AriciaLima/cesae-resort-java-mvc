@@ -12,6 +12,7 @@ public class LoginView {
     private Scanner input;
 
     public LoginView() throws FileNotFoundException {
+        // Cria controlador e scanner
         this.loginController = new LoginController();
         this.input = new Scanner(System.in);
     }
@@ -29,7 +30,7 @@ public class LoginView {
 
             System.out.print("Opção: ");
             opcao = input.nextInt();
-            input.nextLine(); // limpar buffer
+            input.nextLine(); // Limpa buffer
 
             switch (opcao) {
                 case 1:
@@ -65,7 +66,8 @@ public class LoginView {
             System.out.print("Username (0 para voltar): ");
             String username = input.nextLine();
 
-            if (username.equals("0")) return;
+            if (username.equals("0"))
+                return;
 
             System.out.print("Password: ");
             String password = input.nextLine();
@@ -73,7 +75,7 @@ public class LoginView {
             Role role = loginController.validateLogin(username, password);
 
             if (role == expectedRole) {
-                abrirMenu(role, username); // passa o username
+                abrirMenu(role, username); // Passa o username
                 return;
             } else {
                 System.out.println("❌ Acesso não autorizado ❌");

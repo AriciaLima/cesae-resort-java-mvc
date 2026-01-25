@@ -11,15 +11,21 @@ public class TipologiaRepository {
     private ArrayList<Tipologia> tipologias;
 
     public TipologiaRepository() throws FileNotFoundException {
+        // Carrega tipologias do CSV
         this.tipologias = carregarTipologias();
 
+        // Debug opcional para confirmar carregamento
+        System.out.println("DEBUG — Tipologias carregadas: " + tipologias.size());
+        for (Tipologia t : tipologias) {
+            System.out.println(t.getId() + " | " + t.getDescricao());
+        }
     }
 
     private ArrayList<Tipologia> carregarTipologias() throws FileNotFoundException {
         ArrayList<String[]> linhas = CsvFileReader.read("files/tipologia.csv", ",");
         ArrayList<Tipologia> lista = new ArrayList<>();
 
-        // CsvFileReader já removeu o header, então iteramos desde o início
+        // Itera pelas linhas (header já removido)
         for (String[] linha : linhas) {
 
             // Ignorar linhas vazias ou incompletas

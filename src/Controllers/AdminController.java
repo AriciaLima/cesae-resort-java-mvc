@@ -18,13 +18,15 @@ public class AdminController {
     private TipologiaRepository tipologiaRepository;
 
     public AdminController() throws FileNotFoundException {
+        // Inicializa repositórios
         this.reservaRepository = new ReservaRepository();
         this.quartoRepository = new QuartoRepository();
         this.tipologiaRepository = new TipologiaRepository();
     }
 
     /**
-     * Devolve uma lista de arrays de Strings com as tipologias mais reservadas (pode haver empate).
+     * Devolve uma lista de arrays de Strings com as tipologias mais reservadas
+     * (pode haver empate).
      * Cada array contém:
      * [0] = ID da tipologia
      * [1] = Descrição
@@ -33,14 +35,17 @@ public class AdminController {
      */
     public ArrayList<String[]> tipologiaMaisReservada() {
 
+        // Carrega reservas e quartos
         ArrayList<ReservaQuarto> reservas = reservaRepository.getAll();
         ArrayList<Quarto> quartos = quartoRepository.getAll();
 
+        // Mapeia número do quarto → id da tipologia
         HashMap<Integer, Integer> mapaQuartoTipologia = new HashMap<>();
         for (Quarto q : quartos) {
             mapaQuartoTipologia.put(q.getNumero(), q.getTipologiaId());
         }
 
+        // Conta reservas por tipologia
         HashMap<Integer, Integer> contador = new HashMap<>();
         for (ReservaQuarto r : reservas) {
             int numQuarto = r.getNumQuarto();
@@ -52,7 +57,7 @@ public class AdminController {
         }
 
         int max = 0;
-        // Encontrar o valor máximo
+        // Encontra o valor máximo
         for (int total : contador.values()) {
             if (total > max) {
                 max = total;
@@ -62,7 +67,7 @@ public class AdminController {
         ArrayList<String[]> resultados = new ArrayList<>();
 
         if (max == 0) {
-            resultados.add(new String[]{
+            resultados.add(new String[] {
                     "-",
                     "Sem reservas",
                     "-",
@@ -71,12 +76,12 @@ public class AdminController {
             return resultados;
         }
 
-        // Coletar todas as tipologias que têm o valor máximo
+        // Coleta todas as tipologias com o valor máximo
         for (int id : contador.keySet()) {
             if (contador.get(id) == max) {
                 Tipologia t = tipologiaRepository.getById(id);
                 if (t != null) {
-                    resultados.add(new String[]{
+                    resultados.add(new String[] {
                             String.valueOf(t.getId()),
                             t.getDescricao(),
                             String.valueOf(t.getPrecoPorSemana()),

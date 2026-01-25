@@ -11,6 +11,7 @@ public class StaffView {
     private StaffController staffController;
 
     public StaffView() throws FileNotFoundException {
+        // Cria o controlador
         this.staffController = new StaffController();
     }
 
@@ -33,6 +34,7 @@ public class StaffView {
 
             switch (opcao) {
                 case 1:
+                    // Mostra tabela com quartos disponíveis
                     ArrayList<String[]> disponiveis = staffController.quartosDisponiveisSemanaAtual();
 
                     System.out.println("\n===== Quartos Disponíveis — Semana Atual =====");
