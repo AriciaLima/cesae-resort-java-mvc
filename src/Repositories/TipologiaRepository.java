@@ -12,25 +12,39 @@ public class TipologiaRepository {
 
     public TipologiaRepository() throws FileNotFoundException {
         this.tipologias = carregarTipologias();
+
+        // Debug opcional para confirmar carregamento
+        System.out.println("DEBUG — Tipologias carregadas: " + tipologias.size());
+        for (Tipologia t : tipologias) {
+            System.out.println(t.getId() + " | " + t.getDescricao());
+        }
     }
 
     private ArrayList<Tipologia> carregarTipologias() throws FileNotFoundException {
         ArrayList<String[]> linhas = CsvFileReader.read("files/tipologia.csv", ",");
         ArrayList<Tipologia> lista = new ArrayList<>();
 
-        for (int i = 0; i < linhas.size(); i++) { // NÃO ignorar a primeira linha
-            String[] linha = linhas.get(i);
+        // CsvFileReader já removeu o header, então iteramos desde o início
+        for (String[] linha : linhas) {
 
-            int id = Integer.parseInt(linha[0].trim());
-            String descricao = linha[1].trim();
-            double preco = Double.parseDouble(linha[2].trim());
+            // Ignorar linhas vazias ou incompletas
+            if (linha.length < 3 || linha[0].trim().isEmpty()) {
+                continue;
+            }
 
-            lista.add(new Tipologia(id, descricao, preco));
+            try {
+                int id = Integer.parseInt(linha[0].trim());
+                String descricao = linha[1].trim();
+                double preco = Double.parseDouble(linha[2].trim());
+
+                lista.add(new Tipologia(id, descricao, preco));
+            } catch (NumberFormatException e) {
+                System.out.println("Erro ao ler linha: " + String.join(",", linha));
+            }
         }
 
         return lista;
     }
-
 
     public Tipologia getById(int id) {
         for (Tipologia t : tipologias) {

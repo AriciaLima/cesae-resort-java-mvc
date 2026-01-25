@@ -58,13 +58,24 @@ public class GuideView {
         }
 
         System.out.println("\n===== Histórico de Experiências =====");
+
+        System.out.println("+----------+------------------------------+--------------+----------------+");
+        System.out.printf("| %-8s | %-28s | %-12s | %-14s |\n",
+                "ID", "Nome", "Adulto (€)", "Criança (€)");
+        System.out.println("+----------+------------------------------+--------------+----------------+");
+
         for (Experiencia e : historico) {
-            System.out.println(
-                    "ID: " + e.getId() +
-                            " | Nome: " + e.getNome() +
-                            " | Preço Adulto: " + e.getPrecoAdulto() +
-                            " | Preço Criança: " + e.getPrecoCrianca()
+            System.out.printf("| %-8s | %-28s | %-12.2f | %-14.2f |\n",
+                    e.getId(),
+                    e.getNome(),
+                    (double) e.getPrecoAdulto(),
+                    (double) e.getPrecoCrianca()
             );
         }
+
+        System.out.println("+----------+------------------------------+--------------+----------------+");
+
+
     }
-}
+    }
+

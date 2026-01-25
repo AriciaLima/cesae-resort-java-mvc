@@ -4,6 +4,7 @@ import Controllers.AdminController;
 import Models.Tipologia;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AdminView {
@@ -47,9 +48,21 @@ public class AdminView {
                     break;
 
                 case 4: // Consultar Tipologia de Quarto Mais Reservada
-                    Tipologia t = adminController.tipologiaMaisReservada();
-                    System.out.println("Tipologia de Quarto Mais Reservada: " + t.getDescricao());
+                    ArrayList<String[]> listaTipologias = adminController.tipologiaMaisReservada();
+
+                    System.out.println("\n===== Tipologia de Quarto Mais Reservada =====");
+                    System.out.println("+------------+----------------------+----------+--------------+");
+                    System.out.printf("| %-10s | %-20s | %-8s | %-12s |\n",
+                            "ID", "Tipologia", "Preço", "Reservas");
+                    System.out.println("+------------+----------------------+----------+--------------+");
+
+                    for (String[] t : listaTipologias) {
+                        System.out.printf("| %-10s | %-20s | %-8s | %-12s |\n",
+                                t[0].trim(), t[1].trim(), t[2].trim(), t[3].trim());
+                    }
+                    System.out.println("+------------+----------------------+----------+--------------+");
                     break;
+
 
                 case 5: //Consultar Experiência Mais Procurada (Adultos) – Número de bilhetes vendidos
                     break;

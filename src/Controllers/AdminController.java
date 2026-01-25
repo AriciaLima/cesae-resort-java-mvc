@@ -23,20 +23,27 @@ public class AdminController {
         this.tipologiaRepository = new TipologiaRepository();
     }
 
-    public Tipologia tipologiaMaisReservada() {
+    /**
+     * Devolve uma lista de arrays de Strings com as tipologias mais reservadas (pode haver empate).
+     * Cada array contém:
+     * [0] = ID da tipologia
+     * [1] = Descrição
+     * [2] = Preço por semana
+     * [3] = Número de reservas
+     */
+    public ArrayList<String[]> tipologiaMaisReservada() {
+
         ArrayList<ReservaQuarto> reservas = reservaRepository.getAll();
         ArrayList<Quarto> quartos = quartoRepository.getAll();
 
-        // numero do quarto (int) → id da tipologia (int)
         HashMap<Integer, Integer> mapaQuartoTipologia = new HashMap<>();
         for (Quarto q : quartos) {
             mapaQuartoTipologia.put(q.getNumero(), q.getTipologiaId());
         }
 
-        // id da tipologia → contagem
         HashMap<Integer, Integer> contador = new HashMap<>();
         for (ReservaQuarto r : reservas) {
-            int numQuarto = r.getNumQuarto(); // AGORA É INT
+            int numQuarto = r.getNumQuarto();
             Integer tipologiaId = mapaQuartoTipologia.get(numQuarto);
 
             if (tipologiaId != null) {
@@ -44,17 +51,41 @@ public class AdminController {
             }
         }
 
-        int idMaisReservada = -1;
         int max = 0;
-
-        for (int id : contador.keySet()) {
-            if (contador.get(id) > max) {
-                max = contador.get(id);
-                idMaisReservada = id;
+        // Encontrar o valor máximo
+        for (int total : contador.values()) {
+            if (total > max) {
+                max = total;
             }
         }
 
-        return tipologiaRepository.getById(idMaisReservada);
-    }
+        ArrayList<String[]> resultados = new ArrayList<>();
 
+        if (max == 0) {
+            resultados.add(new String[]{
+                    "-",
+                    "Sem reservas",
+                    "-",
+                    "0"
+            });
+            return resultados;
+        }
+
+        // Coletar todas as tipologias que têm o valor máximo
+        for (int id : contador.keySet()) {
+            if (contador.get(id) == max) {
+                Tipologia t = tipologiaRepository.getById(id);
+                if (t != null) {
+                    resultados.add(new String[]{
+                            String.valueOf(t.getId()),
+                            t.getDescricao(),
+                            String.valueOf(t.getPrecoPorSemana()),
+                            String.valueOf(max)
+                    });
+                }
+            }
+        }
+
+        return resultados;
+    }
 }
