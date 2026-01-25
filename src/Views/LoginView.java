@@ -73,7 +73,7 @@ public class LoginView {
             Role role = loginController.validateLogin(username, password);
 
             if (role == expectedRole) {
-                abrirMenu(role);
+                abrirMenu(role, username); // passa o username
                 return;
             } else {
                 System.out.println("❌ Acesso não autorizado ❌");
@@ -81,7 +81,7 @@ public class LoginView {
         }
     }
 
-    private void abrirMenu(Role role) throws FileNotFoundException {
+    private void abrirMenu(Role role, String username) throws FileNotFoundException {
 
         switch (role) {
             case ADMIN:
@@ -93,7 +93,7 @@ public class LoginView {
                 break;
 
             case GUIA:
-                new GuideView().menu();
+                new GuideView(username).menu(); // passa o ID do guia logado
                 break;
         }
     }
