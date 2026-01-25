@@ -13,11 +13,6 @@ public class TipologiaRepository {
     public TipologiaRepository() throws FileNotFoundException {
         this.tipologias = carregarTipologias();
 
-        // Debug opcional para confirmar carregamento
-        System.out.println("DEBUG — Tipologias carregadas: " + tipologias.size());
-        for (Tipologia t : tipologias) {
-            System.out.println(t.getId() + " | " + t.getDescricao());
-        }
     }
 
     private ArrayList<Tipologia> carregarTipologias() throws FileNotFoundException {
