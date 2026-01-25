@@ -6,11 +6,11 @@ import Tools.CsvFileReader;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
-public class ReservaRepository {
+public class ReservaQuartoRepository {
 
     private ArrayList<ReservaQuarto> reservas;
 
-    public ReservaRepository() throws FileNotFoundException {
+    public ReservaQuartoRepository() throws FileNotFoundException {
         this.reservas = carregarReservas();
     }
 
@@ -19,15 +19,13 @@ public class ReservaRepository {
         ArrayList<ReservaQuarto> lista = new ArrayList<>();
 
         for (String[] linha : linhas) {
-            // Leitura e conversão de cada campo
-            String id = linha[0].trim();                      // Ex: "R001"
-            int numQuarto = Integer.parseInt(linha[1].trim()); // Ex: 101
-            String idCliente = linha[2].trim();               // Ex: "C001"
-            int ano = Integer.parseInt(linha[3].trim());      // Ex: 2025
-            int mes = Integer.parseInt(linha[4].trim());      // Ex: 4
-            int semana = Integer.parseInt(linha[5].trim());   // Ex: 12
+            String id = linha[0];
+            int numQuarto = Integer.parseInt(linha[1]);
+            String idCliente = linha[2];
+            int ano = Integer.parseInt(linha[3]);
+            int mes = Integer.parseInt(linha[4]);
+            int semana = Integer.parseInt(linha[5]);
 
-            // Criação do objeto ReservaQuarto
             lista.add(new ReservaQuarto(id, numQuarto, idCliente, ano, mes, semana));
         }
 

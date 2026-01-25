@@ -18,7 +18,7 @@ public class TipologiaRepository {
         ArrayList<String[]> linhas = CsvFileReader.read("files/tipologia.csv", ",");
         ArrayList<Tipologia> lista = new ArrayList<>();
 
-        for (int i = 1; i < linhas.size(); i++) { // ignorar cabeçalho
+        for (int i = 0; i < linhas.size(); i++) { // NÃO ignorar a primeira linha
             String[] linha = linhas.get(i);
 
             int id = Integer.parseInt(linha[0].trim());
@@ -30,6 +30,7 @@ public class TipologiaRepository {
 
         return lista;
     }
+
 
     public Tipologia getById(int id) {
         for (Tipologia t : tipologias) {

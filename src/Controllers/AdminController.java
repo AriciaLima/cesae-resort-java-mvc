@@ -27,14 +27,16 @@ public class AdminController {
         ArrayList<ReservaQuarto> reservas = reservaRepository.getAll();
         ArrayList<Quarto> quartos = quartoRepository.getAll();
 
-        HashMap<String, Integer> mapaQuartoTipologia = new HashMap<>();
+        // numero do quarto (int) → id da tipologia (int)
+        HashMap<Integer, Integer> mapaQuartoTipologia = new HashMap<>();
         for (Quarto q : quartos) {
             mapaQuartoTipologia.put(q.getNumero(), q.getTipologiaId());
         }
 
+        // id da tipologia → contagem
         HashMap<Integer, Integer> contador = new HashMap<>();
         for (ReservaQuarto r : reservas) {
-            String numQuarto = r.getNumQuarto();
+            int numQuarto = r.getNumQuarto(); // AGORA É INT
             Integer tipologiaId = mapaQuartoTipologia.get(numQuarto);
 
             if (tipologiaId != null) {
@@ -44,6 +46,7 @@ public class AdminController {
 
         int idMaisReservada = -1;
         int max = 0;
+
         for (int id : contador.keySet()) {
             if (contador.get(id) > max) {
                 max = contador.get(id);
@@ -53,4 +56,5 @@ public class AdminController {
 
         return tipologiaRepository.getById(idMaisReservada);
     }
+
 }

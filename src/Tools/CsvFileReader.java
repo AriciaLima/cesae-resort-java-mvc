@@ -24,22 +24,30 @@ public class CsvFileReader {
 
         ArrayList<String[]> data = new ArrayList<>();
 
-        Scanner scanner = new Scanner(new File(filePath));
+        File file = new File(filePath);
+        try (Scanner scanner = new Scanner(file)) {
 
-        // ignorar cabeçalho
-        if (scanner.hasNextLine()) {
-            scanner.nextLine();
-        }
+            // ignorar cabeçalho
+            if (scanner.hasNextLine()) {
+                scanner.nextLine();
+            }
 
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
 
-            if (!line.isEmpty()) {
-                data.add(line.split(delimiter));
+                if (line.isEmpty()) continue;
+
+                String[] columns = line.split(delimiter);
+
+                // limpar espaços
+                for (int i = 0; i < columns.length; i++) {
+                    columns[i] = columns[i].trim();
+                }
+
+                data.add(columns);
             }
         }
 
-        scanner.close();
         return data;
     }
 }

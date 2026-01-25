@@ -1,15 +1,16 @@
 package Models;
 
 public class Quarto {
-    private String numero;
+
+    private int numero;
     private int tipologiaId;
 
-    public Quarto(String numero, int tipologiaId) {
+    public Quarto(int numero, int tipologiaId) {
         this.numero = numero;
         this.tipologiaId = tipologiaId;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
